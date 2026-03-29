@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '@/lib/api';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -23,7 +23,7 @@ export default function Home() {
 
   const fetchRestaurants = async () => {
     try {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/restaurants`);
+      const res = await api.get('/restaurants');
       setRestaurants(res.data);
     } catch (err) {
       console.error('Error fetching restaurants:', err);

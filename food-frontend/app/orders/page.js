@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '@/lib/api';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 
@@ -21,7 +21,7 @@ export default function Orders() {
   const fetchOrders = async () => {
     const token = localStorage.getItem('token');
     try {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/orders/history`, {
+      const res = await api.get('/orders/history', {
         headers: { Authorization: `Bearer ${token}` },
       });
       setOrders(res.data);

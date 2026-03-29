@@ -1,6 +1,6 @@
 'use client';
 import { createContext, useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import api from '@/lib/api';
 import toast from 'react-hot-toast';
 
 const AuthContext = createContext();
@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
+      const res = await api.post('/auth/login', {
         email,
         password,
       });
@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (name, email, password) => {
     try {
-      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, {
+      const res = await api.post('/auth/register', {
         name,
         email,
         password,

@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import axios from 'axios';
+import api from '@/lib/api';
 import toast from 'react-hot-toast';
 import { useAuth } from '@/context/AuthContext';
 
@@ -29,10 +29,10 @@ export default function RestaurantMenu() {
 
   const fetchMenu = async () => {
     try {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/restaurants/${id}/menu`);
+      const res = await api.get(`/restaurants/${id}/menu`);
       setMenu(res.data);
       if (res.data.length > 0) {
-        const restRes = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/restaurants`);
+        const restRes = await api.get('/restaurants');
         // FIXED: use restRes.data instead of restRes
         const rest = restRes.data.find(r => r.restaurant_id === parseInt(id));
         setRestaurantName(rest?.name || 'Restaurant');
@@ -87,8 +87,8 @@ export default function RestaurantMenu() {
     const token = localStorage.getItem('token');
 
     try {
-      const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/orders`,
+      const res = await api.post(
+        '/orders',
         { items: orderItems },
         { headers: { Authorization: `Bearer ${token}` } }
       );
