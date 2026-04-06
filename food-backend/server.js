@@ -8,7 +8,15 @@ const restaurantRoutes = require('./routes/restaurants');
 const orderRoutes = require('./routes/orders');
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: [
+    'http://localhost:3000',                    // local dev
+    process.env.FRONTEND_URL,                   // Vercel production URL
+  ].filter(Boolean),
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'ngrok-skip-browser-warning'],
+}));
 app.use(express.json());
 
 // Root route
